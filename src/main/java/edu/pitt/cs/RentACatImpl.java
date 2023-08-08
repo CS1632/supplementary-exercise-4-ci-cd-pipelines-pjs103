@@ -2,6 +2,8 @@ package edu.pitt.cs;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+// I added these on
+import java.util.Iterator;
 
 public class RentACatImpl implements RentACat {
 
@@ -19,6 +21,23 @@ public class RentACatImpl implements RentACat {
 
 	public boolean returnCat(int id) {
 		// TODO
+		if (cats == null) {
+			return false;
+		}
+		if (cats.isEmpty()) {
+			return false;
+		}
+
+		Iterator<Cat> iter = cats.iterator();
+
+		while (iter.hasNext()) {
+			Cat curr = iter.next();
+			if (curr.getId() == id && curr.getRented() == true) { // not terminating loop after first match because no enforcement of unique IDs in Cat.java
+				curr.returnCat();
+				return true;
+			} 
+		}
+		
 		return false;
 	}
 
@@ -34,6 +53,23 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO
+		if (cats == null) {
+			return false;
+		}
+		if (cats.isEmpty()) {
+			return false;
+		}
+
+		Iterator<Cat> iter = cats.iterator();
+
+		while (iter.hasNext()) {
+			Cat curr = iter.next();
+			if (curr.getId() == id && curr.getRented() == false) { // not terminating loop after first match because no enforcement of unique IDs in Cat.java
+				curr.rentCat();
+				return true;
+			} 
+		}
+		
 		return false;
 	}
 
@@ -49,7 +85,26 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO
-		return "WRITE CODE FOR THIS";
+		String output = "";
+
+		if (cats == null) {
+			return output;
+		}
+		if (cats.isEmpty()) {
+			return output;
+		}
+
+		Iterator<Cat> iter = cats.iterator();
+
+		while (iter.hasNext()) {
+			Cat curr = iter.next();
+			if (curr.getRented() == false) { // not terminating loop after first match because no enforcement of unique IDs in Cat.java
+				output += curr.toString();
+				output += "\n";
+			} 
+		}
+		
+		return output;
 	}
 
 	/**
@@ -63,6 +118,16 @@ public class RentACatImpl implements RentACat {
 
 	public boolean catExists(int id) {
 		// TODO
+		Iterator<Cat> iter = cats.iterator();
+
+		while (iter.hasNext()) {
+			Cat curr = iter.next();
+			if (curr.getId() == id) { // not terminating loop after first match because no enforcement of unique IDs in Cat.java
+				curr.returnCat();
+				return true;
+			} 
+		}
+		
 		return false;
 	}
 
